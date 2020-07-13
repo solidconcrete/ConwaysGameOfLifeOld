@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>507</width>
+    <height>329</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>5</width>
+    <height>5</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Grid size</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="sizeLabel">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QTableView" name="tableView">
+       <property name="minimumSize">
+        <size>
+         <width>5</width>
+         <height>5</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="midLineWidth">
+        <number>0</number>
+       </property>
+       <attribute name="horizontalHeaderMinimumSectionSize">
+        <number>5</number>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
+       <attribute name="verticalHeaderMinimumSectionSize">
+        <number>5</number>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>20</number>
+       </attribute>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>X Size</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="XspinBox">
+             <property name="maximum">
+              <number>500</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Y Size</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="YspinBox">
+             <property name="maximum">
+              <number>500</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="SizePushButton">
+           <property name="text">
+            <string>Apply Size</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Speed:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="speedSlider">
+               <property name="minimum">
+                <number>100</number>
+               </property>
+               <property name="maximum">
+                <number>1020</number>
+               </property>
+               <property name="singleStep">
+                <number>10</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="invertedAppearance">
+                <bool>false</bool>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::NoTicks</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Zoom</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSlider" name="cellSizeSlider">
+               <property name="minimum">
+                <number>5</number>
+               </property>
+               <property name="maximum">
+                <number>75</number>
+               </property>
+               <property name="singleStep">
+                <number>10</number>
+               </property>
+               <property name="pageStep">
+                <number>10</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QPushButton" name="startButton">
+           <property name="text">
+            <string>Start</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pauseButton">
+           <property name="text">
+            <string>Pause</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="stepButton">
+           <property name="text">
+            <string>Step</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
