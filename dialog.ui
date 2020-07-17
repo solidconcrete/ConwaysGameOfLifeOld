@@ -57,11 +57,17 @@
        <property name="midLineWidth">
         <number>0</number>
        </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
        <attribute name="horizontalHeaderMinimumSectionSize">
         <number>5</number>
        </attribute>
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>20</number>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
        </attribute>
        <attribute name="verticalHeaderMinimumSectionSize">
         <number>5</number>

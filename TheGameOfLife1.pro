@@ -19,7 +19,8 @@ SOURCES += \
     delegate.cpp \
     main.cpp \
     dialog.cpp \
-    myThread.cpp
+    myThread.cpp \
+    testgui.cpp
 
 HEADERS += \
     delegate.h \
@@ -28,6 +29,8 @@ HEADERS += \
 
 FORMS += \
     dialog.ui
+
+QT += testlib
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

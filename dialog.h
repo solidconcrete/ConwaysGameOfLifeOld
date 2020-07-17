@@ -15,6 +15,8 @@ class Dialog : public QDialog
 {
     Q_OBJECT
 
+    friend class TestGui;
+
 public:
     Dialog(QWidget *parent = nullptr);
     ~Dialog();
@@ -34,8 +36,6 @@ public:
     void makeStep();
 
     void setUpCellSize(int);
-
-
 
     myThread *mThread;
 

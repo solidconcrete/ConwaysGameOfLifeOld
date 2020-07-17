@@ -9,9 +9,8 @@ Dialog::Dialog(QWidget *parent)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-
-    ui->tableView->horizontalHeader()->hide();
-    ui->tableView->verticalHeader()->hide();
+//    ui->tableView->horizontalHeader()->hide();
+//    ui->tableView->verticalHeader()->hide();
     mThread = new myThread(this);
     connect(mThread, SIGNAL(makeStep()), this, SLOT(onMakeStep()));
 }
@@ -24,7 +23,6 @@ Dialog::~Dialog()
 //creates grid
 void Dialog::on_SizePushButton_clicked()
 {
-
     QString labelText = "Width: ";
     int width = ui->XspinBox->value();
     int height = ui->YspinBox->value();
