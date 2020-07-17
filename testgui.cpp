@@ -14,6 +14,9 @@ private slots:
     void countAliveCellsInDeadGrid();
     void oneCellStep();
     void cellsReproduce();
+    void testResurrect();
+    void testKill();
+    void testZoomSlider();
 };
 void TestGui::testSizeSpinner_data()
 {
@@ -45,11 +48,6 @@ void TestGui::testSizeSpinner()
         d.ui->XspinBox->setValue(0);
         events.simulate(d.ui->XspinBox);
         QCOMPARE(d.ui->XspinBox->text().toInt(), expected);
-
-
-//        QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
-//        qDebug() << d.ui->tableView->model()->columnCount();
-
 }
 
 void TestGui::countAliveCellsInDeadGrid()
@@ -89,6 +87,40 @@ void TestGui::cellsReproduce()
     QCOMPARE(4, aliveCells);
 }
 
+void TestGui::testResurrect()
+{
+    QTest::keyClicks(d.ui->XspinBox, "50");
+    QTest::keyClicks(d.ui->YspinBox, "25");
+    QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
+    QList<QModelIndex> indexes;
+    indexes.append( d.model->index(5, 5, QModelIndex()));
+    indexes.append (d.model->index(6, 5, QModelIndex()));
+    indexes.append (d.model->index(6, 6, QModelIndex()));
+    d.resurrectCell(indexes);
+    int aliveCells = d.findLiveCells().count();
+    QCOMPARE(3, aliveCells);
+
+}
+
+void TestGui::testKill()
+{
+    QTest::keyClicks(d.ui->XspinBox, "50");
+    QTest::keyClicks(d.ui->YspinBox, "25");
+    QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
+    QList<QModelIndex> indexes;
+    indexes.append( d.model->index(5, 5, QModelIndex()));
+    indexes.append (d.model->index(6, 5, QModelIndex()));
+    indexes.append (d.model->index(6, 6, QModelIndex()));
+    d.killCell(indexes);
+    int aliveCells = d.findLiveCells().count();
+    QCOMPARE(0, aliveCells);
+};
+
+void TestGui::testZoomSlider()
+{
+    d.ui->cellSizeSlider->setValue(50);
+    QCOMPARE(50, d.ui->tableView->horizontalHeader()->defaultSectionSize());
+}
 
 QTEST_MAIN(TestGui)
 #include "testgui.moc"
