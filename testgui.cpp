@@ -6,7 +6,7 @@ class TestGui: public QObject
 {
     Q_OBJECT
 private:
-    Dialog d;
+//    Dialog d;
 private slots:
 //    void testGui_data();
     void testSizeSpinner();
@@ -24,34 +24,40 @@ void TestGui::testSizeSpinner_data()
     QTest::addColumn<int>("expected");
 
     QTestEventList list1;
+    list1.addKeyClick(Qt::Key_Delete);
     list1.addKeyClicks("1000");
     QTest::newRow("1000") << list1 << 100;
 
     QTestEventList list2;
+    list2.addKeyClick(Qt::Key_Delete);
     list2.addKeyClicks("10");
     QTest::newRow("10") << list2 << 10;
 
     QTestEventList list3;
+    list3.addKeyClick(Qt::Key_Delete);
     list3.addKeyClicks("-666");
     QTest::newRow("-666") << list3 << 66;
 
     QTestEventList list4;
+    list4.addKeyClick(Qt::Key_Delete);
     list4.addKeyClicks("500");
     QTest::newRow("500") << list4 << 500;
 }
 
 void TestGui::testSizeSpinner()
 {
+    Dialog d;
     QFETCH(QTestEventList, events);
     QFETCH(int, expected);
 
-        d.ui->XspinBox->setValue(0);
+        d.ui->XspinBox->setValue(1);
         events.simulate(d.ui->XspinBox);
         QCOMPARE(d.ui->XspinBox->text().toInt(), expected);
 }
 
 void TestGui::countAliveCellsInDeadGrid()
 {
+    Dialog d;
     QTest::keyClicks(d.ui->XspinBox, "50");
     QTest::keyClicks(d.ui->YspinBox, "25");
     QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
@@ -61,6 +67,7 @@ void TestGui::countAliveCellsInDeadGrid()
 
 void TestGui::oneCellStep()
 {
+    Dialog d;
     QTest::keyClicks(d.ui->XspinBox, "50");
     QTest::keyClicks(d.ui->YspinBox, "25");
     QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
@@ -73,6 +80,7 @@ void TestGui::oneCellStep()
 
 void TestGui::cellsReproduce()
 {
+    Dialog d;
     QTest::keyClicks(d.ui->XspinBox, "50");
     QTest::keyClicks(d.ui->YspinBox, "25");
     QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
@@ -89,6 +97,7 @@ void TestGui::cellsReproduce()
 
 void TestGui::testResurrect()
 {
+    Dialog d;
     QTest::keyClicks(d.ui->XspinBox, "50");
     QTest::keyClicks(d.ui->YspinBox, "25");
     QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
@@ -104,6 +113,7 @@ void TestGui::testResurrect()
 
 void TestGui::testKill()
 {
+    Dialog d;
     QTest::keyClicks(d.ui->XspinBox, "50");
     QTest::keyClicks(d.ui->YspinBox, "25");
     QTest::mouseClick(d.ui->SizePushButton, Qt::LeftButton);
@@ -118,9 +128,10 @@ void TestGui::testKill()
 
 void TestGui::testZoomSlider()
 {
+    Dialog d;
     d.ui->cellSizeSlider->setValue(50);
     QCOMPARE(50, d.ui->tableView->horizontalHeader()->defaultSectionSize());
 }
 
-QTEST_MAIN(TestGui)
-#include "testgui.moc"
+//QTEST_MAIN(TestGui)
+//#include "testgui.moc"

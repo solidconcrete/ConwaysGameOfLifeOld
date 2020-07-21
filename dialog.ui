@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>507</width>
-    <height>329</height>
+    <width>499</width>
+    <height>316</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -32,14 +32,14 @@
      <item>
       <widget class="QLabel" name="sizeLabel">
        <property name="text">
-        <string>TextLabel</string>
+        <string>Width: 5, Height: 5</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_8">
      <item>
       <widget class="QTableView" name="tableView">
        <property name="minimumSize">
@@ -61,7 +61,7 @@
         <bool>false</bool>
        </attribute>
        <attribute name="horizontalHeaderMinimumSectionSize">
-        <number>5</number>
+        <number>3</number>
        </attribute>
        <attribute name="horizontalHeaderDefaultSectionSize">
         <number>20</number>
@@ -70,7 +70,7 @@
         <bool>false</bool>
        </attribute>
        <attribute name="verticalHeaderMinimumSectionSize">
-        <number>5</number>
+        <number>3</number>
        </attribute>
        <attribute name="verticalHeaderDefaultSectionSize">
         <number>20</number>
@@ -78,125 +78,54 @@
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>X Size</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="XspinBox">
-             <property name="maximum">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Y Size</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="YspinBox">
-             <property name="maximum">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="SizePushButton">
-           <property name="text">
-            <string>Apply Size</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>Speed:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                <string>X Size</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QSlider" name="speedSlider">
+              <widget class="QSpinBox" name="XspinBox">
                <property name="minimum">
-                <number>100</number>
+                <number>1</number>
                </property>
                <property name="maximum">
-                <number>1020</number>
-               </property>
-               <property name="singleStep">
-                <number>10</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="invertedAppearance">
-                <bool>false</bool>
-               </property>
-               <property name="tickPosition">
-                <enum>QSlider::NoTicks</enum>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
-             <item>
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>Zoom</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSlider" name="cellSizeSlider">
-               <property name="minimum">
-                <number>5</number>
-               </property>
-               <property name="maximum">
-                <number>75</number>
-               </property>
-               <property name="singleStep">
-                <number>10</number>
-               </property>
-               <property name="pageStep">
-                <number>10</number>
+                <number>500</number>
                </property>
                <property name="value">
-                <number>10</number>
+                <number>5</number>
                </property>
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Y Size</string>
                </property>
-               <property name="tickPosition">
-                <enum>QSlider::TicksBelow</enum>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="YspinBox">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>500</number>
+               </property>
+               <property name="value">
+                <number>5</number>
                </property>
               </widget>
              </item>
@@ -204,30 +133,132 @@
            </item>
           </layout>
          </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QPushButton" name="SizePushButton">
+             <property name="text">
+              <string>Apply</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <widget class="QPushButton" name="clearButton">
+         <property name="text">
+          <string>Clear</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
-          <widget class="QPushButton" name="startButton">
-           <property name="text">
-            <string>Start</string>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Speed:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="speedSlider">
+                 <property name="minimum">
+                  <number>100</number>
+                 </property>
+                 <property name="maximum">
+                  <number>1020</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>10</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="invertedAppearance">
+                  <bool>false</bool>
+                 </property>
+                 <property name="tickPosition">
+                  <enum>QSlider::NoTicks</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Zoom</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSlider" name="cellSizeSlider">
+                 <property name="minimum">
+                  <number>3</number>
+                 </property>
+                 <property name="maximum">
+                  <number>75</number>
+                 </property>
+                 <property name="singleStep">
+                  <number>10</number>
+                 </property>
+                 <property name="pageStep">
+                  <number>10</number>
+                 </property>
+                 <property name="value">
+                  <number>10</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="tickPosition">
+                  <enum>QSlider::TicksBelow</enum>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pauseButton">
-           <property name="text">
-            <string>Pause</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="stepButton">
-           <property name="text">
-            <string>Step</string>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QPushButton" name="startButton">
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pauseButton">
+             <property name="text">
+              <string>Pause</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="stepButton">
+             <property name="text">
+              <string>Step</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -237,6 +268,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>XspinBox</tabstop>
+  <tabstop>YspinBox</tabstop>
+  <tabstop>SizePushButton</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>clearButton</tabstop>
+  <tabstop>speedSlider</tabstop>
+  <tabstop>cellSizeSlider</tabstop>
+  <tabstop>startButton</tabstop>
+  <tabstop>pauseButton</tabstop>
+  <tabstop>stepButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

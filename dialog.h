@@ -31,11 +31,17 @@ public:
 
     int countAliveNeighbors(QModelIndex);
 
-    void setUpVisibility(int width, int height);
+    void setUpVisibility(int margin);
 
     void makeStep();
 
     void setUpCellSize(int);
+
+    void setUpModel();
+
+    void setUpGridSize();
+
+    void keyPressEvent(QKeyEvent *event);
 
     myThread *mThread;
 
@@ -54,6 +60,8 @@ private slots:
 
     void on_cellSizeSlider_valueChanged(int value);
 
+    void on_clearButton_clicked();
+
 public slots:
     void onMakeStep();
 
@@ -61,7 +69,6 @@ private:
     Ui::Dialog *ui;
     QStandardItemModel *model;
     Delegate *myDelegate;
-
-
+    QList<QModelIndex> aliveCells;
 };
 #endif // DIALOG_H

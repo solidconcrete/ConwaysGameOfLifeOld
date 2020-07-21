@@ -33,5 +33,4 @@ void myThread::setLatency(int newSpeed)
 {
     const QMutexLocker locker(&m_mutex);
     latency = newSpeed;
-//    msleep(100);
 }

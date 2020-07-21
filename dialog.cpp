@@ -9,8 +9,12 @@ Dialog::Dialog(QWidget *parent)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-//    ui->tableView->horizontalHeader()->hide();
-//    ui->tableView->verticalHeader()->hide();
+    model = new QStandardItemModel(105, 105, this);
+    setUpModel();
+    ui->tableView->setModel(model);
+    myDelegate = new Delegate(this);
+    ui->tableView->setItemDelegate(myDelegate);
+    setUpVisibility(100);
     mThread = new myThread(this);
     connect(mThread, SIGNAL(makeStep()), this, SLOT(onMakeStep()));
 }
@@ -20,38 +24,43 @@ Dialog::~Dialog()
     delete ui;
 }
 
-//creates grid
+
+//set up grid size
 void Dialog::on_SizePushButton_clicked()
 {
     QString labelText = "Width: ";
     int width = ui->XspinBox->value();
     int height = ui->YspinBox->value();
-
+    int margin;
     labelText.append(QString::number(width));
     labelText.append(", Height: ");
     labelText.append(QString::number(height));
     ui->sizeLabel->setText(labelText);
 
-    myDelegate = new Delegate(this);
+    //making grid bigger than requested and hiding those additional cells
+    margin = 100;
+    model->setColumnCount(width + margin);
+    model->setRowCount(height + margin);
+    void setUpModel();
+    setUpVisibility(margin);
 
-    //create and set up table model. the grid will have additional 2 rows and columns on each side
-    //that will not be seen by user
-    model = new QStandardItemModel(height + 4, width + 4, this);
+    this->setFocus();
 
-    for (int col = 0; col < width + 4; col ++)
+}
+//sets up a model so that newly added cells are marked as dead, but without killing living cells
+void Dialog::setUpModel()
+{
+    for (int col = 0; col < model->columnCount(); col++)
     {
-        for (int row = 0; row < height + 4; row ++)
+        for (int row = 0; row < model->rowCount(); row++)
         {
             QModelIndex index = model->index(row, col, QModelIndex());
-            model->setData(index, 0);
+            if (index.data() != 1)
+            {
+                model->setData(index, 0);
+            }
         }
     }
-
-    //populate and set up table
-    ui->tableView->setModel(model);
-    ui->tableView->setItemDelegate(myDelegate);
-    setUpVisibility(width, height);
-
 }
 
 void Dialog::setUpCellSize(int cellSize)
@@ -72,48 +81,51 @@ void Dialog::on_tableView_clicked(const QModelIndex &index)
         model->setData(index, 1);
     }
     ui->tableView->setModel(model);
-
+    this->setFocus();
 }
 
-//
 void Dialog::makeStep()
 {
         QList<QModelIndex> toKill;
         QList<QModelIndex> toResurrect;
-
-        QList<QModelIndex> aliveIndexes= findLiveCells();
+        if (aliveCells.count() == 0)
+        {
+            aliveCells = findLiveCells();
+        }
         int aliveInNeighborhood;
         QModelIndex index;
 
-        //algorithm goes through alive cells and their neighbors
-        foreach(index, aliveIndexes)
+        //go through alive cells
+        foreach(index, aliveCells)
         {
             aliveInNeighborhood = 0;
             if (!toKill.contains(index) && !toResurrect.contains(index))   //skip this index if it's already in kill/resurrect list
             {
-                for (int col = index.column() -1; col <= index.column() +1; col++)
-                    for(int row = index.row() -1; row <= index.row() +1; row++)
+                // go through live cells' neighbors
+                for (int col = index.column() - 1; col <= index.column() + 1; col++)
+                    for(int row = index.row() - 1; row <= index.row() + 1; row++)
                     {
                         QModelIndex tempIndex = model->index(row, col, QModelIndex());
                         aliveInNeighborhood = countAliveNeighbors(tempIndex);
-                        if (tempIndex.data()==0 && aliveInNeighborhood == 3 && !toResurrect.contains(tempIndex))
+
+                        if ((tempIndex.data() != 1 && aliveInNeighborhood == 3) && !toResurrect.contains(tempIndex))
                         {
                             toResurrect.append(tempIndex);
+                            aliveCells.append(tempIndex);
                         }
                         if (tempIndex.data() == 1 && (aliveInNeighborhood < 3 || aliveInNeighborhood > 4) && !toKill.contains(tempIndex))
                         {
                             toKill.append(tempIndex);
+                            aliveCells.removeOne(tempIndex);
                         }
                     }
             }
         }
-
         if (toKill.count() == 0 && toResurrect.count() == 0)
         {
             mThread->stop();
             return;
         }
-
         killCell(toKill);
         resurrectCell(toResurrect);
 }
@@ -151,20 +163,19 @@ int Dialog::countAliveNeighbors(QModelIndex cellIndex)
 }
 
 //hide columns/rows that shouldn't be seen and show the ones that should be
-void Dialog::setUpVisibility(int width, int height)
+void Dialog::setUpVisibility(int margin)
 {
-
-    for (int col = 0; col < width + 4; col++)
+    for (int col = 0; col < model->columnCount(); col++)
     {
-        if ((col < 2) || (col > width + 1))
+        if ((col < margin / 2) || (col >= model->columnCount() - margin / 2))
             ui->tableView->hideColumn(col);
         else
             ui->tableView->showColumn(col);
     }
 
-    for (int row = 0; row < height + 4; row++)
+    for (int row = 0; row < model->rowCount(); row++)
     {
-        if ((row < 2) || (row > height + 1))
+        if ((row < margin / 2) || (row >= model->rowCount() - margin / 2))
             ui->tableView->hideRow(row);
         else
             ui->tableView->showRow(row);
@@ -174,16 +185,20 @@ void Dialog::setUpVisibility(int width, int height)
 void Dialog::on_stepButton_clicked()
 {
     makeStep();
+    this->setFocus();
 }
 
 void Dialog::on_startButton_clicked()
 {
     mThread->start(QThread::HighestPriority);
+    this->setFocus();
+    aliveCells.clear();
 }
 
 void Dialog::on_pauseButton_clicked()
 {
     mThread->stop();
+    this->setFocus();
 }
 
 void Dialog::onMakeStep()
@@ -215,4 +230,42 @@ QList<QModelIndex> const Dialog::findLiveCells()
                 indexes.append(cellIndex);
         }
     return indexes;
+}
+
+void Dialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Space)
+    {
+        makeStep();
+        return;
+    }
+    if (event->key() == Qt::Key_Plus)
+    {
+        ui->cellSizeSlider->setValue(ui->cellSizeSlider->value() + 1);
+        return;
+    }
+    if (event->key() == Qt::Key_Minus)
+    {
+        ui->cellSizeSlider->setValue(ui->cellSizeSlider->value() - 1);
+
+        return;
+    }
+
+}
+
+void Dialog::on_clearButton_clicked()
+{
+    if (mThread->isStopped())
+    {
+        for (int col = 0; col < model->columnCount(); col++)
+        {
+            for (int row = 0; row < model->rowCount(); row++)
+            {
+                QModelIndex index = model->index(row, col, QModelIndex());
+                model->setData(index, 0);
+            }
+        }
+        aliveCells.clear();
+        this->setFocus();
+    }
 }
