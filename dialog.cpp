@@ -14,6 +14,7 @@ Dialog::Dialog(QWidget *parent)
     ui->tableView->setModel(model);
     myDelegate = new Delegate(this);
     ui->tableView->setItemDelegate(myDelegate);
+    ui->tableView->setMouseTracking(true);
     setUpVisibility(100);
     mThread = new myThread(this);
     connect(mThread, SIGNAL(makeStep()), this, SLOT(onMakeStep()));
@@ -84,6 +85,7 @@ void Dialog::on_tableView_clicked(const QModelIndex &index)
     this->setFocus();
 }
 
+
 void Dialog::makeStep()
 {
         QList<QModelIndex> toKill;
@@ -126,18 +128,18 @@ void Dialog::makeStep()
             mThread->stop();
             return;
         }
-        killCell(toKill);
-        resurrectCell(toResurrect);
+        killCells(toKill);
+        resurrectCells(toResurrect);
 }
 
-void Dialog::killCell(QList<QModelIndex> indexes)
+void Dialog::killCells(QList<QModelIndex> indexes)
 {
     for (int i = 0; i < indexes.size(); i++)
     model->setData(indexes.value(i), 0);
     ui->tableView->setModel(model);
 }
 
-void Dialog::resurrectCell(QList<QModelIndex> indexes)
+void Dialog::resurrectCells(QList<QModelIndex> indexes)
 {
     for (int i = 0; i < indexes.size(); i++)
     model->setData(indexes.value(i), 1);
@@ -268,4 +270,18 @@ void Dialog::on_clearButton_clicked()
         aliveCells.clear();
         this->setFocus();
     }
+}
+
+void Dialog::on_tableView_entered(const QModelIndex &index)
+{
+//    QApplication::keyboardModifiers().testFlag(Qt::ControlModifier
+    if (QApplication::mouseButtons().testFlag(Qt::LeftButton))
+    {
+        model->setData(index, 1);
+    }
+    if (QApplication::mouseButtons().testFlag(Qt::RightButton))
+    {
+        model->setData(index, 0);
+    }
+    this->setFocus();
 }

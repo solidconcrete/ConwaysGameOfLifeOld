@@ -48,6 +48,9 @@
          <height>5</height>
         </size>
        </property>
+       <property name="cursor" stdset="0">
+        <cursorShape>ArrowCursor</cursorShape>
+       </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
@@ -138,7 +141,7 @@
            <item>
             <widget class="QPushButton" name="SizePushButton">
              <property name="text">
-              <string>Apply</string>
+              <string>Apply size</string>
              </property>
             </widget>
            </item>
@@ -149,7 +152,7 @@
        <item>
         <widget class="QPushButton" name="clearButton">
          <property name="text">
-          <string>Clear</string>
+          <string>Clear grid</string>
          </property>
         </widget>
        </item>
@@ -225,7 +228,10 @@
                   <enum>Qt::Vertical</enum>
                  </property>
                  <property name="tickPosition">
-                  <enum>QSlider::TicksBelow</enum>
+                  <enum>QSlider::TicksBothSides</enum>
+                 </property>
+                 <property name="tickInterval">
+                  <number>5</number>
                  </property>
                 </widget>
                </item>
@@ -254,7 +260,7 @@
            <item>
             <widget class="QPushButton" name="stepButton">
              <property name="text">
-              <string>Step</string>
+              <string>Next gen</string>
              </property>
             </widget>
            </item>
@@ -265,6 +271,13 @@
       </layout>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

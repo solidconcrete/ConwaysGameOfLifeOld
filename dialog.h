@@ -25,9 +25,13 @@ public:
 
     QList<QModelIndex> const findLiveCells();
 
-    void killCell(QList<QModelIndex>);
+//    QList<QModelIndex> const findCellsToKill();
 
-    void resurrectCell(QList<QModelIndex>);
+//    QList<QModelIndex> const findCellsToResurrect();
+
+    void killCells(QList<QModelIndex>);
+
+    void resurrectCells(QList<QModelIndex>);
 
     int countAliveNeighbors(QModelIndex);
 
@@ -46,6 +50,7 @@ public:
     myThread *mThread;
 
 private slots:
+
     void on_SizePushButton_clicked();
 
     void on_tableView_clicked(const QModelIndex &index);
@@ -61,6 +66,8 @@ private slots:
     void on_cellSizeSlider_valueChanged(int value);
 
     void on_clearButton_clicked();
+
+    void on_tableView_entered(const QModelIndex &index);
 
 public slots:
     void onMakeStep();

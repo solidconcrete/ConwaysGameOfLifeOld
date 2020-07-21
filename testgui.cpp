@@ -105,7 +105,7 @@ void TestGui::testResurrect()
     indexes.append( d.model->index(5, 5, QModelIndex()));
     indexes.append (d.model->index(6, 5, QModelIndex()));
     indexes.append (d.model->index(6, 6, QModelIndex()));
-    d.resurrectCell(indexes);
+    d.resurrectCells(indexes);
     int aliveCells = d.findLiveCells().count();
     QCOMPARE(3, aliveCells);
 
@@ -121,7 +121,7 @@ void TestGui::testKill()
     indexes.append( d.model->index(5, 5, QModelIndex()));
     indexes.append (d.model->index(6, 5, QModelIndex()));
     indexes.append (d.model->index(6, 6, QModelIndex()));
-    d.killCell(indexes);
+    d.killCells(indexes);
     int aliveCells = d.findLiveCells().count();
     QCOMPARE(0, aliveCells);
 };
