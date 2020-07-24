@@ -180,7 +180,7 @@
                   <number>100</number>
                  </property>
                  <property name="maximum">
-                  <number>1020</number>
+                  <number>950</number>
                  </property>
                  <property name="singleStep">
                   <number>10</number>
@@ -273,9 +273,9 @@
     </layout>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="aliveCells">
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
     </widget>
    </item>

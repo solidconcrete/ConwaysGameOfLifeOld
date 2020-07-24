@@ -53,8 +53,6 @@ private slots:
 
     void on_SizePushButton_clicked();
 
-    void on_tableView_clicked(const QModelIndex &index);
-
     void on_stepButton_clicked();
 
     void on_startButton_clicked();
@@ -68,6 +66,8 @@ private slots:
     void on_clearButton_clicked();
 
     void on_tableView_entered(const QModelIndex &index);
+
+    void on_tableView_pressed(const QModelIndex &index);
 
 public slots:
     void onMakeStep();

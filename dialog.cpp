@@ -1,6 +1,7 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 #include <QThread>
+#include <QString>
 #include "myThread.h"
 #include "delegate.h"
 #include "myThread.h"
@@ -22,6 +23,8 @@ Dialog::Dialog(QWidget *parent)
 
 Dialog::~Dialog()
 {
+    mThread->stop();
+    delete mThread;
     delete ui;
 }
 
@@ -48,6 +51,7 @@ void Dialog::on_SizePushButton_clicked()
     this->setFocus();
 
 }
+
 //sets up a model so that newly added cells are marked as dead, but without killing living cells
 void Dialog::setUpModel()
 {
@@ -70,66 +74,55 @@ void Dialog::setUpCellSize(int cellSize)
     ui->tableView->verticalHeader()->setDefaultSectionSize(cellSize);
 }
 
-//click to set cell to live/dead condition
-void Dialog::on_tableView_clicked(const QModelIndex &index)
-{
-    if(index.data().toInt() == 1)
-    {
-        model->setData(index, 0);
-    }
-    else
-    {
-        model->setData(index, 1);
-    }
-    ui->tableView->setModel(model);
-    this->setFocus();
-}
-
-
 void Dialog::makeStep()
 {
-        QList<QModelIndex> toKill;
-        QList<QModelIndex> toResurrect;
-        if (aliveCells.count() == 0)
-        {
-            aliveCells = findLiveCells();
-        }
+
+    QList<QModelIndex> toKill;
+    QList<QModelIndex> toResurrect;
+
+    if (aliveCells.count() == 0)
+    {
+        aliveCells = findLiveCells();
+    }
+
         int aliveInNeighborhood;
-        QModelIndex index;
 
         //go through alive cells
-        foreach(index, aliveCells)
+    foreach(QModelIndex index, aliveCells)
+    {
+        aliveInNeighborhood = 0;
         {
-            aliveInNeighborhood = 0;
-            if (!toKill.contains(index) && !toResurrect.contains(index))   //skip this index if it's already in kill/resurrect list
-            {
-                // go through live cells' neighbors
-                for (int col = index.column() - 1; col <= index.column() + 1; col++)
-                    for(int row = index.row() - 1; row <= index.row() + 1; row++)
-                    {
-                        QModelIndex tempIndex = model->index(row, col, QModelIndex());
-                        aliveInNeighborhood = countAliveNeighbors(tempIndex);
+            // go through live cells' neighbors
+            for (int col = index.column() - 1; col <= index.column() + 1; col++)
+                for(int row = index.row() - 1; row <= index.row() + 1; row++)
+                {
+                    QModelIndex tempIndex = model->index(row, col, QModelIndex());
+                    aliveInNeighborhood = countAliveNeighbors(tempIndex);
 
-                        if ((tempIndex.data() != 1 && aliveInNeighborhood == 3) && !toResurrect.contains(tempIndex))
-                        {
-                            toResurrect.append(tempIndex);
-                            aliveCells.append(tempIndex);
-                        }
-                        if (tempIndex.data() == 1 && (aliveInNeighborhood < 3 || aliveInNeighborhood > 4) && !toKill.contains(tempIndex))
-                        {
-                            toKill.append(tempIndex);
-                            aliveCells.removeOne(tempIndex);
-                        }
+                    if ((tempIndex.data() != 1 && aliveInNeighborhood == 3) && !toResurrect.contains(tempIndex))
+                    {
+                        toResurrect.append(tempIndex);
+                        aliveCells.append(tempIndex);
                     }
-            }
+                    if (tempIndex.data() == 1 && (aliveInNeighborhood < 3 || aliveInNeighborhood > 4) && !toKill.contains(tempIndex))
+                    {
+                        toKill.append(tempIndex);
+                        aliveCells.removeOne(tempIndex);
+                    }
+                }
         }
-        if (toKill.count() == 0 && toResurrect.count() == 0)
-        {
-            mThread->stop();
-            return;
-        }
-        killCells(toKill);
-        resurrectCells(toResurrect);
+    }
+    if (toKill.count() == 0 && toResurrect.count() == 0)
+    {
+        mThread->stop();
+        return;
+    }
+    killCells(toKill);
+    resurrectCells(toResurrect);
+
+    QString text = "Alive cells: ";
+    text.append(QString::number(aliveCells.count()));
+    ui->aliveCells->setText(text);
 }
 
 void Dialog::killCells(QList<QModelIndex> indexes)
@@ -194,7 +187,6 @@ void Dialog::on_startButton_clicked()
 {
     mThread->start(QThread::HighestPriority);
     this->setFocus();
-    aliveCells.clear();
 }
 
 void Dialog::on_pauseButton_clicked()
@@ -278,10 +270,28 @@ void Dialog::on_tableView_entered(const QModelIndex &index)
     if (QApplication::mouseButtons().testFlag(Qt::LeftButton))
     {
         model->setData(index, 1);
+        aliveCells.append(index);
     }
     if (QApplication::mouseButtons().testFlag(Qt::RightButton))
     {
         model->setData(index, 0);
+        aliveCells.removeOne(index);
     }
+    this->setFocus();
+}
+
+void Dialog::on_tableView_pressed(const QModelIndex &index)
+{
+    if(index.data().toInt() == 1)
+    {
+        model->setData(index, 0);
+        aliveCells.removeOne(index);
+    }
+    else
+    {
+        model->setData(index, 1);
+        aliveCells.append(index);
+    }
+    ui->tableView->setModel(model);
     this->setFocus();
 }
