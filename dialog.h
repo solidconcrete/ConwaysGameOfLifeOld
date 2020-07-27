@@ -21,34 +21,6 @@ public:
     Dialog(QWidget *parent = nullptr);
     ~Dialog();
 
-    QList<int> const checkNeighbors(QModelIndex &index);
-
-    QList<QModelIndex> const findLiveCells();
-
-//    QList<QModelIndex> const findCellsToKill();
-
-//    QList<QModelIndex> const findCellsToResurrect();
-
-    void killCells(QList<QModelIndex>);
-
-    void resurrectCells(QList<QModelIndex>);
-
-    int countAliveNeighbors(QModelIndex);
-
-    void setUpVisibility(int margin);
-
-    void makeStep();
-
-    void setUpCellSize(int);
-
-    void setUpModel();
-
-    void setUpGridSize();
-
-    void keyPressEvent(QKeyEvent *event);
-
-    myThread *mThread;
-
 private slots:
 
     void on_SizePushButton_clicked();
@@ -73,9 +45,35 @@ public slots:
     void onMakeStep();
 
 private:
+
+    myThread *mThread;
+
     Ui::Dialog *ui;
     QStandardItemModel *model;
     Delegate *myDelegate;
     QList<QModelIndex> aliveCells;
+
+    QList<int> const checkNeighbors(QModelIndex &index);
+
+    QList<QModelIndex> const findLiveCells();
+
+    void killCells(QList<QModelIndex>);
+
+    void resurrectCells(QList<QModelIndex>);
+
+    int countAliveNeighbors(QModelIndex);
+
+    void setUpVisibility(int margin);
+
+    void makeStep();
+
+    void setUpCellSize(int);
+
+    void setUpModel();
+
+    void setUpGridSize();
+
+    void keyPressEvent(QKeyEvent *event);
+
 };
 #endif // DIALOG_H

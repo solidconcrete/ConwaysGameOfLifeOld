@@ -133,5 +133,6 @@ void TestGui::testZoomSlider()
     QCOMPARE(50, d.ui->tableView->horizontalHeader()->defaultSectionSize());
 }
 
+//uncomment this line and comment main class to run tests
 //QTEST_MAIN(TestGui)
-//#include "testgui.moc"
+#include "testgui.moc"
